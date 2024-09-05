@@ -20,11 +20,16 @@ const { url } = Astro.props;
 
 const id = url.split("/").at(-2);
 const audioSource = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`;
+const imageSource = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
 
 const page = Math.ceil(+id! / siteInfo.pageSize);
 ---
 
-<MainLayout title={name}>
+<MainLayout
+  title={`Pokémon - #${id} ${name}`}
+  description=`Información sobre el Pokémon ${name}`
+  image={imageSource}
+>
   <section class="mt-10 mx-10 flex flex-col justify-center items-center">
     <div>
       <a href=`/pokemons/${page}`>Regresar</a>
