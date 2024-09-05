@@ -8,16 +8,18 @@ export const getStaticPaths = (async () => {
   const resp = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
   const { results } = (await resp.json()) as PokemonListResponse;
 
-  return results.map(({ name, url }) => ({
-    params: { name },
-    props: { name, url },
-  }));
+  return results.map(({ name, url }) => {
+    const id = url.split("/").at(-2);
+    return {
+      params: { id },
+      props: { name, url },
+    };
+  });
 }) satisfies GetStaticPaths;
 
-const { name } = Astro.params;
-const { url } = Astro.props;
+const { id } = Astro.params;
+const { name, url } = Astro.props;
 
-const id = url.split("/").at(-2);
 const audioSource = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`;
 ---
 
