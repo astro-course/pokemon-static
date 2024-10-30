@@ -4,6 +4,7 @@ import type { PokemonListResponse } from "@interfaces/pokemon-list.response";
 import MainLayout from "@layout/MainLayout.astro";
 import type { GetStaticPaths } from "astro";
 import { siteInfo } from "../../consts/site-info";
+import Title from "@components/shared/Title.astro";
 
 export const getStaticPaths = (async () => {
   const resp = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
@@ -32,8 +33,8 @@ const page = Math.ceil(+id! / siteInfo.pageSize);
 >
   <section class="mt-10 mx-10 flex flex-col justify-center items-center">
     <div>
-      <a href=`/`>Regresar</a>
-      <h1 class="text-5xl capitalize">{name}</h1>
+      <button onclick="history.back()" class="text-blue-500">Regresar</button>
+      <Title>{name}</Title>
     </div>
 
     <PokemonCard name={name} url={url} isBig />
