@@ -1,40 +1,46 @@
 ---
-import type { GetStaticPaths } from "astro";
-import PokemonCard from "../../components/pokemons/PokemonCard.astro";
-import type { PokemonListResponse } from "../../interfaces/pokemon-list.response";
-import MainLayout from "../../layout/MainLayout.astro";
-import { siteInfo } from "../../consts/site-info";
+import type { GetStaticPaths } from 'astro';
+import type { PokemonListResponse } from '../../interfaces/pokemon-list.response';
+import MainLayout from '../../layouts/MainLayout.astro';
+
+// Path relativo
+// import PokemonCard from '../../components/pokemons/PokemonCard.astro';
+// Path Absoluto
+// import PokemonCard from 'src/components/pokemons/PokemonCard.astro';
+// Path Alias
+import PokemonCard from '@components/pokemons/PokemonCard.astro';
 
 export const getStaticPaths = (async () => {
-  const resp = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
+  const resp = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151');
   const { results } = (await resp.json()) as PokemonListResponse;
 
   return results.map(({ name, url }) => {
-    const id = url.split("/").at(-2);
+    const id = url.split('/').at(-2);
+
     return {
-      params: { id },
-      props: { name, url },
+      params: { id: id },
+      props: { name: name, url: url },
     };
   });
 }) satisfies GetStaticPaths;
 
 const { id } = Astro.params;
-const { name, url } = Astro.props;
+const { url, name } = Astro.props;
 
-const audioSource = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`;
-const page = Math.ceil(+id! / siteInfo.pageSize);
+const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`;
 ---
 
-<MainLayout title={name}>
+<MainLayout title="Algún pokémon">
   <section class="mt-10 mx-10 flex flex-col justify-center items-center">
     <div>
-      <a href=`/`>Regresar</a>
+      <a href="/">Regresar</a>
       <h1 class="text-5xl capitalize">{name}</h1>
     </div>
 
     <PokemonCard name={name} url={url} isBig />
+
     <audio controls class="mt-5">
-      <source src={audioSource} type="audio/ogg" />
+      <source src={audioSrc} type="audio/ogg" />
       Your browser does not support the audio element.
     </audio>
   </section>

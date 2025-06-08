@@ -1,7 +1,6 @@
 ---
-import NavBar from "@components/shared/NavBar.astro";
-import { ViewTransitions } from "astro:transitions";
-import { siteInfo } from "src/consts/site-info";
+import { ViewTransitions } from 'astro:transitions';
+import { siteInfo } from 'src/consts/site-info';
 
 interface Props {
   title?: string;
@@ -22,19 +21,28 @@ const {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+
     <!-- SEO -->
     <meta name="description" content={description} />
-    <meta name="author" content={"Sergio Barreras"} />
+    <meta name="author" content={'Fernando Herrera'} />
+
     <!-- OG Metatags -->
-    <meta name="og:title" content={title} />
-    <meta name="og:description" content={description} />
-    <meta name="og:image" content={image} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+
+    <!-- Required -->
     <title>{title}</title>
+
     <ViewTransitions />
+    <!-- <style>
+      @view-transition {
+        navigation: auto; /* enabled! */
+      } -->
   </head>
-  <body class="bg-slate-800 text-slate-100">
-    <NavBar/>
-    <main class="mt-10 m-auto max-w-3xl">
+
+  <body class="bg-slate-800 text-slate-100 m-auto max-w-3xl">
+    <main class="mt-10">
       <slot />
     </main>
   </body>

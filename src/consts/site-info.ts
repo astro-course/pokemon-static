@@ -1,5 +1,4 @@
 export const siteInfo = {
-  title: "Pokémon Static",
-  description: "A static site with Pokémon data",
-  pageSize: 20,
+  title: 'Pokémon Static',
+  description: 'A static site with Pokémon data',
 };
