@@ -1,21 +1,21 @@
 ---
-import type { GetStaticPaths } from 'astro';
+import type { GetStaticPaths } from "astro";
 // Código Server Side Only - Momento de construcción BUILD TIME
-import PokemonCard from '../../components/pokemons/PokemonCard.astro';
-import type { PokemonListResponse } from '../../interfaces/pokemon-list.response';
+import PokemonCard from "../../components/pokemons/PokemonCard.astro";
+import type { PokemonListResponse } from "../../interfaces/pokemon-list.response";
 
-import MainLayout from '../../layouts/MainLayout.astro';
+import MainLayout from "../../layouts/MainLayout.astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
-  const resp = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151');
+  const resp = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
   const { results } = (await resp.json()) as PokemonListResponse;
 
   return paginate(results, { pageSize: 20 });
 }) satisfies GetStaticPaths;
 
-const title = 'Pokémon Static | Home';
+const title = "Pokémon Static | Home";
 const { page } = Astro.props;
-console.log('🚀 ~ page:', page);
+console.log("🚀 ~ page:", page);
 ---
 
 <MainLayout title={title}>
@@ -30,16 +30,9 @@ console.log('🚀 ~ page:', page);
   </section>
 
   <section class="flex mt-10 gap-2 items-center">
-    <!-- {
-      page.url.prev && (
-        <a class="btn" href={page.url.prev}>
-          Anteriores
-        </a>
-      )
-    } -->
     <a
       class:list={[
-        'btn',
+        "btn",
         {
           disabled: !page.url.prev,
         },
@@ -51,7 +44,7 @@ console.log('🚀 ~ page:', page);
 
     <a
       class:list={[
-        'btn',
+        "btn",
         {
           disabled: !page.url.next,
         },

@@ -1,35 +1,24 @@
 ---
-import type { GetStaticPaths } from 'astro';
-import type { PokemonListResponse } from '@interfaces/pokemon-list.response';
+import type { GetStaticPaths } from "astro";
+import type { PokemonListResponse } from "@interfaces/pokemon-list.response";
 
-import PokemonCard from '@components/pokemons/PokemonCard.astro';
-import MainLayout from '@layouts/MainLayout.astro';
+import PokemonCard from "@components/pokemons/PokemonCard.astro";
+import MainLayout from "@layouts/MainLayout.astro";
 
 export const getStaticPaths = (async () => {
-  const resp = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151');
+  const resp = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
   const { results } = (await resp.json()) as PokemonListResponse;
 
   return results.map(({ name, url }) => ({
     params: { name: name },
     props: { name: name, url: url },
   }));
-
-  // return [
-  //   {
-  //     params: { name: 'bulbasaur' },
-  //     props: { name: 'bulbasaur', url: 'https://pokeapi.co/api/v2/pokemon/1/' },
-  //   },
-  //   {
-  //     params: { name: 'charmander' },
-  //     props: { name: 'bulbasaur', url: 'https://pokeapi.co/api/v2/pokemon/4/' },
-  //   },
-  // ];
 }) satisfies GetStaticPaths;
 
 const { name } = Astro.params;
 const { url } = Astro.props;
 
-const id = url.split('/').at(-2);
+const id = url.split("/").at(-2);
 const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`;
 const imageSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
 ---
