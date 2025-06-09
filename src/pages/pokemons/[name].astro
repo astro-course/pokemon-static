@@ -1,11 +1,11 @@
 ---
 import type { GetStaticPaths } from "astro";
 import type { PokemonListResponse } from "@interfaces/pokemon-list.response";
+import { Icon } from "astro-icon/components";
 
 import PokemonCard from "@components/pokemons/PokemonCard.astro";
 import MainLayout from "@layouts/MainLayout.astro";
 import Title from "@components/shared/Title.astro";
-import { Icon } from "astro-icon/components";
 
 export const getStaticPaths = (async () => {
   const resp = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
@@ -71,6 +71,7 @@ const imageSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
 
     const name = btnFavorite.dataset.name ?? "";
     const id = btnFavorite.dataset.id ?? "";
+    const isFav = favoritePokemons.some((fav) => fav.name === name);
 
     const heartOutline = btnFavorite.querySelector(
       "[data-outline]"
@@ -78,16 +79,22 @@ const imageSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
 
     const heartFull = btnFavorite.querySelector("[data-full]") as HTMLElement;
 
+    if (isFav) {
+      heartOutline.classList.add("hidden");
+      heartFull.classList.remove("hidden");
+    }
+
     const toggleFavorite = () => {
       const isFav = favoritePokemons.some((fav) => fav.name === name);
-
       if (isFav) {
         favoritePokemons = favoritePokemons.filter((fav) => fav.name !== name);
       } else {
         favoritePokemons.push({ id: +id, name });
       }
 
-      localStorage.setItem("favorotes", JSON.stringify(favoritePokemons));
+      localStorage.setItem("favorites", JSON.stringify(favoritePokemons));
+
+      return isFav;
     };
 
     btnFavorite.addEventListener("click", () => {
