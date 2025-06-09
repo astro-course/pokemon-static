@@ -3,11 +3,23 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["./src/components/*"],
-      "@interfaces/*": ["./src/interfaces/*"],
-      "@layouts/*": ["./src/layouts/*"],
-      "@pages/*": [".src/pages/*"],
-      "@icons/*": [".src/icons/*"]
-    }
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@interfaces/*": [
+        "./src/interfaces/*"
+      ],
+      "@layouts/*": [
+        "./src/layouts/*"
+      ],
+      "@pages/*": [
+        ".src/pages/*"
+      ],
+      "@icons/*": [
+        ".src/icons/*"
+      ]
+    },
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js"
   }
 }
