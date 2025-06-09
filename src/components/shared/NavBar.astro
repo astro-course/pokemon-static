@@ -14,7 +14,7 @@ const currentPath = Astro.url.pathname;
     class="container flex items-center justify-center p-6 mx-auto text-gray-600 capitalize dark:text-gray-300"
   >
     {
-      links.map(({ href, text }) => (
+      links.map(async ({ href, text }) => (
         <div>
           <a
             href={href}
@@ -24,7 +24,10 @@ const currentPath = Astro.url.pathname;
           </a>
 
           {currentPath === href ? (
-            <div class="border-b-2 border-blue-500 mx-4" />
+            <div
+              transition:name="menu-line"
+              class="border-b-2 border-blue-500 mx-4"
+            />
           ) : (
             <div class="border-b-2 border-transparent" />
           )}
